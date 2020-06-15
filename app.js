@@ -1,25 +1,24 @@
+// const axios = require('axios').default;
 document.querySelector('.get-jokes').addEventListener('click', fetchJokes);
 
-function fetchJokes(e) {
-    const number = document.querySelector('input[type="number"]').value;
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://api.icndb.com/jokes/random/${number}`,true);
-    xhr.onload = function () {
-        if (this.status === 200){
-            const response = JSON.parse(this.responseText);
-            let output = '';
-            if (response.type === 'success') {
-                response.value.forEach(joke => {
-                    output += `<li>${joke.joke}</li>`;
-                });
-            }else{
-                output += 'Sorry, something went wrong...'
-            }
-            document.querySelector('.jokes').innerHTML = output;
-            console.log(response);
+async function fetchJokes(e) {
+  const number = document.querySelector('input[type="number"]').value;
+  axios
+    .get(`http://api.icndb.com/jokes/random/${number}`)
+    .then((res) => {
+      const response = res.data.value;
+      if (res.status === 200) {
+        let output = '';
+        if (res.statusText === 'OK') {
+          response.forEach((joke) => {
+            output += `<li>${joke.joke}</li>`;
+          });
+        } else {
+          output += 'Sorry, something went wrong...';
         }
-    }
-    xhr.send()
-    e.preventDefault();
-
+        document.querySelector('.jokes').innerHTML = output;
+      }
+    })
+    .catch((err) => console.log(err));
+  e.preventDefault();
 }
