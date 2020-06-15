@@ -10,7 +10,7 @@ async function fetchJokes(e) {
       const response = res.data.value;
       if (res.status === 200) {
         let output = '';
-        if (res.statusText === 'OK') {
+        if (res.data.type === 'success') {
           response.forEach((joke) => {
             output += `<li>${joke.joke}</li>`;
           });
