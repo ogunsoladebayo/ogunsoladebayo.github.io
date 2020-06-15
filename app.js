@@ -4,7 +4,7 @@ document.querySelector('.get-jokes').addEventListener('click', fetchJokes);
 async function fetchJokes(e) {
   const number = document.querySelector('input[type="number"]').value;
   axios
-    .get(`http://api.icndb.com/jokes/random/${number}`)
+    .get(`https://api.icndb.com/jokes/random/${number}`)
     .then((res) => {
       console.log(res);
       const response = res.data.value;
