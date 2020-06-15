@@ -6,6 +6,7 @@ async function fetchJokes(e) {
   axios
     .get(`http://api.icndb.com/jokes/random/${number}`)
     .then((res) => {
+      console.log(res);
       const response = res.data.value;
       if (res.status === 200) {
         let output = '';
